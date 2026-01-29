@@ -1,1 +1,262 @@
-/* Add styles here */
+:root {
+  --primary-color: #4a90e2;
+  --secondary-color: #357abd;
+  --bg-color: #f4f7f6;
+  --text-color: #333;
+  --card-bg: #fff;
+  --sidebar-width: 300px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.header {
+  background-color: #fff;
+  padding: 0 2rem;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #555;
+  margin: 0 1rem;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+.user-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #757575;
+}
+
+/* Main Container */
+#app-container {
+  flex: 1;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Course Grid (Home) */
+.section-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #2c3e50;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.course-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: pointer;
+}
+
+.course-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+}
+
+.course-thumbnail {
+  height: 160px;
+  background-color: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 3rem;
+}
+
+.course-info {
+  padding: 1.5rem;
+}
+
+.course-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.course-instructor {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin-bottom: 1rem;
+}
+
+.progress-bar-bg {
+  height: 6px;
+  background-color: #eee;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--primary-color);
+  width: 0%;
+}
+
+.course-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.5rem;
+  font-size: 0.8rem;
+  color: #95a5a6;
+}
+
+/* Player View */
+.player-layout {
+  display: flex;
+  gap: 2rem;
+  height: calc(100vh - 150px);
+}
+
+.video-container {
+  flex: 1;
+  background: #000;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  position: relative;
+}
+
+.curriculum-sidebar {
+  width: var(--sidebar-width);
+  background: var(--card-bg);
+  border-radius: 8px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-header {
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+  font-weight: 700;
+}
+
+.module-list {
+  list-style: none;
+}
+
+.module-item {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.module-title {
+  padding: 1rem;
+  background: #f9f9f9;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.lesson-list {
+  list-style: none;
+}
+
+.lesson-item {
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  transition: background 0.2s;
+}
+
+.lesson-item:hover {
+  background-color: #f0f4f8;
+}
+
+.lesson-item.active {
+  background-color: #e3f2fd;
+  color: var(--primary-color);
+  font-weight: 500;
+}
+
+.lesson-icon {
+  font-size: 0.8rem;
+}
+
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: #999;
+  font-size: 0.9rem;
+  margin-top: auto;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .player-layout {
+    flex-direction: column;
+    height: auto;
+  }
+  .curriculum-sidebar {
+    width: 100%;
+    height: 300px;
+  }
+  .video-container {
+    height: 300px;
+  }
+}

@@ -1,0 +1,244 @@
+/* assets/style.css - Future Tech Concept */
+
+/* ===============================
+   Variables & Reset
+================================ */
+:root {
+    --bg-color: #050505;       /* Deep Black */
+    --surface-color: rgba(20, 20, 20, 0.6); /* Glass Black */
+    --primary-color: #00F3FF;  /* Neon Cyan */
+    --secondary-color: #BC13FE;/* Neon Purple */
+    --text-color: #EEEEEE;
+    --text-muted: #AAAAAA;
+    
+    --glass-border: 1px solid rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 243, 255, 0.1);
+    
+    --header-height: 70px;
+    --radius-md: 16px;
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: 'Pretendard', 'Noto Sans KR', sans-serif;
+    background: radial-gradient(circle at 50% -20%, #1a1a2e, var(--bg-color));
+    color: var(--text-color);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+ul, li { list-style: none; margin: 0; padding: 0; }
+
+/* ===============================
+   Layout & Container
+================================ */
+.container {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 24px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ===============================
+   Header (Glassmorphism)
+================================ */
+.site-header {
+    background: rgba(5, 5, 5, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    height: var(--header-height);
+    border-bottom: var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+.header-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo a {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px var(--primary-color); /* Neon Glow */
+}
+.gnb { display: flex; gap: 32px; }
+.gnb a { 
+    font-size: 15px; 
+    font-weight: 500; 
+    color: var(--text-muted);
+    position: relative;
+}
+.gnb a:hover, .gnb a.active { 
+    color: var(--primary-color); 
+    text-shadow: 0 0 8px var(--primary-color);
+}
+
+/* User Badge */
+.user-info {
+    font-size: 13px;
+    color: var(--primary-color);
+    background: rgba(0, 243, 255, 0.1);
+    padding: 6px 14px;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 243, 255, 0.3);
+}
+
+/* ===============================
+   Hero Section (Cyberpunk)
+================================ */
+.hero {
+    position: relative;
+    padding: 100px 0;
+    text-align: center;
+    overflow: hidden;
+    margin-bottom: 60px;
+}
+/* Background Glow Effect */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(188,19,254,0.2) 0%, transparent 70%);
+    z-index: -1;
+    filter: blur(50px);
+}
+.hero h2 {
+    font-size: 48px;
+    margin-bottom: 20px;
+    background: linear-gradient(to right, #fff, var(--primary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: 800;
+}
+.hero p { font-size: 18px; color: var(--text-muted); margin-bottom: 40px; }
+
+/* ===============================
+   Buttons (Neon Style)
+================================ */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.btn-green { /* Main Action -> Neon Cyan */
+    background: transparent;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0,243,255,0.2);
+}
+.btn-green:hover {
+    background: var(--primary-color);
+    color: #000;
+    box-shadow: 0 0 20px rgba(0,243,255,0.6);
+}
+.btn-outline {
+    border: 1px solid var(--text-muted);
+    color: var(--text-muted);
+    background: transparent;
+}
+.btn-outline:hover {
+    border-color: var(--white);
+    color: var(--white);
+    background: rgba(255,255,255,0.05);
+}
+.btn-gray { /* Secondary */
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+}
+.btn-gray:hover { background: rgba(255,255,255,0.2); }
+
+/* ===============================
+   Cards (Glass Panels)
+================================ */
+.board-view, .login-box, .admin-card {
+    background: var(--surface-color);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: var(--glass-border);
+    padding: 32px;
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+}
+.board-view:hover {
+    transform: translateY(-5px);
+    border-color: rgba(255,255,255,0.3);
+    box-shadow: 0 8px 32px rgba(0,243,255,0.1);
+}
+
+/* ===============================
+   Tables & Forms
+================================ */
+.board-table { width: 100%; border-collapse: separate; border-spacing: 0; }
+.board-table th {
+    text-align: left;
+    padding: 16px;
+    color: var(--text-muted);
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.board-table td {
+    padding: 20px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: var(--text-color);
+}
+.board-table tr:hover td { background: rgba(255,255,255,0.03); }
+
+.input, .textarea, select {
+    width: 100%;
+    padding: 14px 16px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 15px;
+    outline: none;
+    transition: 0.3s;
+}
+.input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+/* Titles */
+.page-title {
+    font-size: 32px;
+    margin-bottom: 30px;
+    font-weight: 700;
+    background: linear-gradient(90deg, #fff, #aaa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; text-transform: uppercase; }
+.badge.on { background: rgba(0,243,255,0.2); color: var(--primary-color); border:1px solid var(--primary-color); }
+
+/* Footer */
+.site-footer {
+    border-top: 1px solid rgba(255,255,255,0.05);
+    background: #000;
+    color: #555;
+    margin-top: 80px;
+    padding: 40px 0;
+    text-align: center;
+}

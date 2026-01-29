@@ -1,14 +1,39 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ko">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
+  <title>UEDU - 미래를 여는 교육</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <link href='/style.css' rel='stylesheet'>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+  <!-- Header -->
+  <header class="header">
+    <div class="logo" onclick="app.navigate('home')">
+      <i class="fas fa-graduation-cap"></i> UEDU
+    </div>
+    <nav class="nav-links">
+      <a href="#" onclick="app.navigate('home')">강의 목록</a>
+      <a href="#" onclick="app.navigate('my-learning')">내 강의실</a>
+    </nav>
+    <div class="user-profile">
+      <span class="user-name">학생님</span>
+      <div class="avatar"><i class="fas fa-user"></i></div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main id="app-container">
+    <!-- Views will be injected here by JavaScript -->
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 UEDU. All rights reserved.</p>
+  </footer>
+
+  <script src="/main.js"></script>
 </body>
 </html>
