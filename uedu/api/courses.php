@@ -7,7 +7,7 @@ header('Content-Type: application/json; charset=utf-8');
 try {
     // 1. Fetch all active courses
     $course_stmt = db()->query("
-        SELECT id, title, short_desc, price, thumbnail, category, is_featured
+        SELECT id, title, description AS short_desc, price, thumbnail, category, is_featured
         FROM uedu_courses 
         WHERE is_active = 1 
         ORDER BY is_featured DESC, id DESC
@@ -26,7 +26,7 @@ try {
     // 3. Process courses and add full thumbnail URL
     foreach ($courses as &$course) {
         if (!empty($course['thumbnail'])) {
-            $course['thumbnail_url'] = BASE_URL . '/' . $course['thumbnail'];
+            $course['thumbnail_url'] = $course['thumbnail'];
         } else {
             $course['thumbnail_url'] = 'https://source.unsplash.com/random/500x300?skill,learn&sig=' . $course['id'];
         }

@@ -30,12 +30,7 @@ if (!empty($keyword)) {
 }
 
 /* 과정 목록 조회 */
-$stmt = db()->prepare("
-    SELECT id, title, description, price, thumbnail
-    FROM uedu_courses
-    $where
-    ORDER BY id DESC
-");
+$stmt = db()->prepare("SELECT id, title, description, price, thumbnail FROM uedu_courses $where ORDER BY id DESC");
 $stmt->execute($params);
 $courses = $stmt->fetchAll();
 
@@ -50,58 +45,56 @@ if ($loggedIn) {
 }
 ?>
 
-<div class="container">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:30px;">
-        <h2 class="page-title" style="margin:0;">교육과정 신청</h2>
+<div class="container" style="margin-top: 120px;">
+    <div class="section-header">
+        <span class="section-tag">Courses</span>
+        <h1 class="section-title">교육과정 신청</h1>
+        <p class="section-subtitle">다양한 강좌를 탐색하고 지금 바로 학습을 시작하세요.</p>
         
-        <!-- 검색 폼 -->
-        <form method="GET" style="display:flex; gap:10px;">
-            <input type="text" name="keyword" value="<?= htmlspecialchars($keyword) ?>" 
-                   placeholder="강의명 검색" 
-                   style="padding:10px; border:1px solid #ddd; border-radius:5px; width:200px;">
-            <button type="submit" class="btn btn-navy" style="padding:10px 20px;">검색</button>
+        <form method="GET" class="page-search-form">
+            <input type="text" name="keyword" class="form-control" value="<?= htmlspecialchars($keyword) ?>" placeholder="관심 있는 강좌를 검색해보세요...">
+            <button type="submit" class="btn btn-primary">검색</button>
         </form>
     </div>
 
     <?php if (empty($courses)): ?>
-        <div style="text-align:center; padding:50px; color:#666; background:#f9f9f9; border-radius:10px;">
-            <i class="fas fa-exclamation-circle" style="font-size:40px; margin-bottom:15px; display:block; color:#ccc;"></i>
-            등록된 강의가 없습니다.
+        <div class="empty-state">
+            <i class="fas fa-search"></i>
+            <h3>'<?= htmlspecialchars($keyword) ?>'에 대한 검색 결과가 없습니다.</h3>
+            <p>다른 검색어를 입력하시거나, 전체 강좌 목록을 확인해보세요.</p>
+            <a href="<?= BASE_URL ?>/courses.php" class="btn btn-secondary">모든 강좌 보기</a>
         </div>
     <?php else: ?>
         <div class="course-grid">
-            <?php foreach ($courses as $c): ?>
+            <?php foreach ($courses as $c): 
+                $thumbnail_url = !empty($c['thumbnail']) ? $c['thumbnail'] : 'https://source.unsplash.com/random/500x300?skill,learn&sig=' . $c['id'];
+                $short_desc = $c['description'];
+            ?>
                 <div class="course-card">
                     <div class="card-img-wrap">
-                        <?php if (!empty($c['thumbnail'])): ?>
-                            <img src="<?= htmlspecialchars($c['thumbnail']) ?>" alt="<?= htmlspecialchars($c['title']) ?>">
-                        <?php else: ?>
-                            <div class="no-img">NO IMAGE</div>
-                        <?php endif; ?>
+                        <img src="<?= htmlspecialchars($thumbnail_url) ?>" alt="<?= htmlspecialchars($c['title']) ?>">
                     </div>
                     
                     <div class="card-body">
                         <h3 class="card-title"><?= htmlspecialchars($c['title']) ?></h3>
-                        <div class="card-text">
-                            <?= nl2br(htmlspecialchars($c['description'] ?? '')) ?>
-                        </div>
+                        <p class="card-text"><?= nl2br(htmlspecialchars($short_desc ?? '')) ?></p>
                         
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                        <div class="card-footer">
                             <span class="card-price">
                                 <?= intval($c['price']) > 0 ? number_format($c['price']).'원' : '무료' ?>
                             </span>
 
-                            <?php if ($loggedIn): ?>
-                                <?php $status = $myOrders[$c['id']] ?? null; ?>
-                                <?php if ($status === 'paid'): ?>
-                                    <a href="classroom.php?course_id=<?= $c['id'] ?>" class="btn btn-gray" style="padding:8px 16px; font-size:14px;">강의실</a>
+                            <?php if ($loggedIn):
+                                $status = $myOrders[$c['id']] ?? null;
+                                if ($status === 'paid'): ?>
+                                    <a href="classroom.php?course_id=<?= $c['id'] ?>" class="btn btn-secondary btn-sm">강의실 입장</a>
                                 <?php elseif ($status === 'pending'): ?>
-                                    <a href="enroll.php?course_id=<?= $c['id'] ?>" class="btn btn-gray" style="padding:8px 16px; font-size:14px;">확인중</a>
+                                    <span class="btn btn-secondary btn-sm disabled">신청 확인중</span>
                                 <?php else: ?>
-                                    <a href="enroll.php?course_id=<?= $c['id'] ?>" class="btn btn-navy" style="padding:8px 16px; font-size:14px;">신청하기</a>
+                                    <a href="enroll.php?course_id=<?= $c['id'] ?>" class="btn btn-primary btn-sm">수강 신청</a>
                                 <?php endif; ?>
                             <?php else: ?>
-                                <a href="login.php" onclick="return confirm('로그인이 필요합니다.');" class="btn btn-navy" style="padding:8px 16px; font-size:14px;">신청하기</a>
+                                <a href="login.php" onclick="return confirm('로그인이 필요합니다.');" class="btn btn-primary btn-sm">수강 신청</a>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -112,3 +105,50 @@ if ($loggedIn) {
 </div>
 
 <?php require __DIR__ . '/layout_footer.php'; ?>
+
+<style>
+/* Page-specific styles for courses.php */
+.page-search-form {
+    display: flex;
+    gap: 10px;
+    max-width: 600px;
+    margin: 40px auto 0;
+}
+.page-search-form .form-control {
+    flex-grow: 1;
+    height: 48px;
+    padding-left: 20px;
+}
+.empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border-color);
+}
+.empty-state i {
+    font-size: 40px;
+    color: var(--primary-color);
+    margin-bottom: 24px;
+}
+.empty-state h3 {
+    font-size: 1.5rem;
+    color: var(--text-heading);
+}
+.empty-state p {
+    color: var(--text-muted);
+    margin-bottom: 24px;
+}
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid var(--border-color);
+}
+.btn.disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+</style>

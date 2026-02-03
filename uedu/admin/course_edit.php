@@ -10,11 +10,12 @@ $course = [
     'title' => '',
     'description' => '',
     'price' => 0,
+    'category' => '', // [추가]
     'sequential_learning' => 0,
     'prevent_skip' => 0,
     'is_active' => 0,
     'is_featured' => 0,
-    'thumbnail' => '' // [추가]
+    'thumbnail' => ''
 ];
 
 /* 수정 시 데이터 로드 */
@@ -30,6 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_course'])) {
     $title = trim($_POST['title'] ?? '');
     $desc  = $_POST['description'] ?? '';
     $price = intval($_POST['price'] ?? 0);
+    $category = trim($_POST['category'] ?? ''); // [추가]
     $seq   = isset($_POST['sequential_learning']) ? 1 : 0;
     $skip  = isset($_POST['prevent_skip']) ? 1 : 0;
     $active= isset($_POST['is_active']) ? 1 : 0;
@@ -42,17 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_course'])) {
         $fName   = $_FILES['thumbnail']['name'];
         $ext     = strtolower(pathinfo($fName, PATHINFO_EXTENSION));
         
-        // 이미지 확장자 체크
         if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif', 'webp'])) {
-            // 저장 폴더: /assets/uploads/ (폴더가 없으면 생성해야 함)
             $uploadDir = __DIR__ . '/../assets/uploads/';
             if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
-            
             $newFileName = 'course_' . time() . '_' . rand(100,999) . '.' . $ext;
             $destPath = $uploadDir . $newFileName;
-            
             if (move_uploaded_file($tmpName, $destPath)) {
-                $thumbnailPath = '/uedu/assets/uploads/' . $newFileName; // DB 저장용 웹 경로
+                $thumbnailPath = '/uedu/assets/uploads/' . $newFileName;
             }
         }
     }
@@ -60,18 +58,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_course'])) {
     if ($id > 0) {
         $stmt = db()->prepare("
             UPDATE uedu_courses
-            SET title=?, description=?, price=?, sequential_learning=?, prevent_skip=?, 
+            SET title=?, description=?, price=?, category=?, sequential_learning=?, prevent_skip=?, 
                 is_active=?, is_featured=?, thumbnail=?
             WHERE id=?
         ");
-        $stmt->execute([$title, $desc, $price, $seq, $skip, $active, $featured, $thumbnailPath, $id]);
+        $stmt->execute([$title, $desc, $price, $category, $seq, $skip, $active, $featured, $thumbnailPath, $id]);
     } else {
         $stmt = db()->prepare("
             INSERT INTO uedu_courses
-            (title, description, price, sequential_learning, prevent_skip, is_active, is_featured, thumbnail, created_at)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, NOW())
+            (title, description, price, category, sequential_learning, prevent_skip, is_active, is_featured, thumbnail, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
         ");
-        $stmt->execute([$title, $desc, $price, $seq, $skip, $active, $featured, $thumbnailPath]);
+        $stmt->execute([$title, $desc, $price, $category, $seq, $skip, $active, $featured, $thumbnailPath]);
     }
 
     header('Location: ' . BASE_URL . '/admin/courses.php');
@@ -104,6 +102,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['save_course'])) {
             <div class="col">
                 <div class="muted">가격(원)</div>
                 <input class="input" type="number" name="price" min="0" value="<?= intval($course['price']) ?>">
+            </div>
+             <div class="col">
+                <div class="muted">카테고리</div>
+                <input class="input" name="category" value="<?= htmlspecialchars($course['category'] ?? '') ?>">
             </div>
         </div>
 

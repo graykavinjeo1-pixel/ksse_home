@@ -1,2 +1,2 @@
 <?php
-define('BASE_URL', '/uedu');
+define('BASE_URL', '');
