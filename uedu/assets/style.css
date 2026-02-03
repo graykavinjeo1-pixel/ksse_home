@@ -63,6 +63,10 @@ h1, h2, h3, h4, h5, h6 {
     padding: 0 20px;
     position: relative;
 }
+.site-content {
+    padding-top: var(--header-height);
+}
+
 /* 상단 헤더 때문에 가려지는 현상 방지 */
 body > .container { margin-top: 60px; margin-bottom: 60px; min-height: 600px; }
 
@@ -366,7 +370,12 @@ body > .hero + .section { margin-top: 50px; }
 .form-input-group:focus-within { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
 .form-input-group i { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); color: #94a3b8; transition: color 0.2s; }
 .form-input-group:focus-within i { color: var(--primary-color); }
-.form-control { box-sizing: border-box; width: 100%; height: 48px; padding: 0 16px 0 48px; font-size: 1rem; border: none; border-radius: var(--button-radius); background-color: white; color: var(--text-body); }
+.form-control { box-sizing: border-box; width: 100%; height: 48px; padding: 0 16px 0 12px; font-size: 1rem; border: none; border-radius: var(--button-radius); background-color: white; color: var(--text-body);align-content: center; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); }
+.form-control-textarea {
+    height: auto; /* Override fixed height for textareas */
+    padding-top: 10px; /* Specific top padding as requested */
+    align-content: flex-start; /* Ensure content starts from top */
+}
 .form-control:focus { outline: none; }
 .form-control::placeholder { color: #94a3b8; }
 .btn-block { width: 100%; height: 48px; font-size: 1rem; font-weight: 600; }
@@ -543,5 +552,171 @@ body > .hero + .section { margin-top: 50px; }
     /* --- Footer --- */
     .site-footer { padding: 40px 0; margin-top: 60px; }
     .footer-links { display: flex; flex-direction: column; gap: 10px; }
-    .footer-links a { margin: 0; }
+        .footer-links a { margin: 0; }
+    }
+    
+    /* ==========================================================================
+       Board Styles
+       ========================================================================== */
+    .page-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--text-heading);
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--border-color);
+    }
+    
+    .board-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 24px;
+    }
+    
+    .search-form {
+        display: flex;
+        gap: 8px;
+    }
+    
+    .board-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: var(--bg-card);
+        border: 3px solid var(--border-color);
+        border-radius: var(--card-radius);
+        overflow: hidden;
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .board-table th,
+    .board-table td {
+        padding: 16px;
+        text-align: left;
+        border-bottom: 1px solid var(--border-color);
+    }
+    
+    .board-table th {
+        background-color: #f8fafc;
+        font-weight: 600;
+        font-size: 14px;
+        color: var(--text-muted);
+    }
+    
+    .board-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .board-table tbody tr:hover {
+        background-color: #f1f5f9;
+    }
+    
+    .board-table .post-title {
+        font-weight: 600;
+        color: var(--text-body);
+    }
+    .board-table .post-title:hover {
+        color: var(--primary-color);
+    }
+    .lock-icon {
+        font-size: 12px;
+        margin-left: 4px;
+    }
+        
+    /* Board Write Form */
+    .board-write-form {
+        background: var(--bg-card);
+        padding: 32px;
+        border-radius: var(--card-radius);
+        border: 1px solid var(--border-color);
+        box-shadow: var(--shadow-sm);
+    }
+    
+    .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 12px;
+        margin-top: 24px;
+    }
+.current-file {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 8px;
 }
+
+
+/* Board View Page */
+.board-view-card {
+    background: var(--bg-card);
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+}
+
+.board-view-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px 24px;
+    background-color: #f8fafc;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.board-view-card .card-body {
+    padding: 32px 24px;
+}
+
+.post-content {
+    min-height: 200px;
+    line-height: 1.7;
+}
+
+.post-attachment {
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px dashed var(--border-color);
+    font-size: 14px;
+}
+.post-attachment a {
+    text-decoration: underline;
+}
+
+.admin-answer-box {
+    margin-top: 24px;
+    background-color: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: var(--card-radius);
+}
+
+.admin-answer-box .answer-header {
+    padding: 12px 20px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.admin-badge {
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.admin-answer-box .answer-content {
+    padding: 20px;
+    line-height: 1.7;
+}
+
+.password-prompt-card {
+    max-width: 480px;
+    margin: 40px auto;
+    background: var(--bg-card);
+    padding: 32px;
+    border-radius: var(--card-radius);
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+}
+
+.password-prompt-card h4 {
+    font-size: 1.5rem;
+    margin-top: 0;
+}
+    

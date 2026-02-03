@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/_admin_guard.php';
-require __DIR__ . '/_admin_header.php';
 
 $status = $_GET['status'] ?? '';
 $message = '';
@@ -45,6 +44,8 @@ $stmt = db()->query("
     ORDER BY (o.status = 'pending') DESC, o.created_at DESC, o.id DESC
 ");
 $orders = $stmt->fetchAll();
+
+require __DIR__ . '/_admin_header.php';
 ?>
 
 <div class="admin-card">

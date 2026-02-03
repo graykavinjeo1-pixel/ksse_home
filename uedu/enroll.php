@@ -63,25 +63,35 @@ if (!$order) {
 }
 ?>
 
-<div class="container">
-    <h2 class="page-title">수강신청 - 입금 안내</h2>
-
-    <div class="board-view">
-        <h3 style="margin-top:0;"><?= htmlspecialchars($course['title']) ?></h3>
-        <p>결제 방식은 <strong>계좌이체</strong>만 지원합니다.</p>
-
-        <div style="background:#f9f9f9;padding:16px;border-radius:8px;margin:16px 0;">
-            <div><strong>입금 계좌</strong></div>
-            <div style="margin-top:6px;">국민은행 123-456-789012 (예금주: UEDU)</div>
-            <div style="margin-top:6px;">입금 금액: <?= number_format($price) ?>원</div>
+<div class="container enroll-page">
+    <div class="enroll-card">
+        <div class="enroll-header">
+            <h2 class="page-title">수강신청 - 입금 안내</h2>
+            <p>아래 계좌로 입금하시면 관리자 확인 후 수강이 시작됩니다.</p>
         </div>
 
-        <p style="color:#666;">입금 완료 후 관리자가 확인하면 상태가 <strong>정상</strong>으로 변경됩니다.</p>
-        <p style="color:#666;">현재 상태: <span class="badge">입금대기</span></p>
+        <div class="enroll-body">
+            <h3 class="course-title"><?= htmlspecialchars($course['title']) ?></h3>
 
-        <div style="margin-top:20px;">
-            <a class="btn btn-gray" href="<?= BASE_URL ?>/myroom.php">나의강의실로</a>
-            <a class="btn btn-green" style="margin-left:8px;" href="<?= BASE_URL ?>/courses.php">다른 과정 보기</a>
+            <div class="payment-info-box">
+                <div class="info-item">
+                    <span class="label">입금 계좌</span>
+                    <span class="value">국민은행 123-456-789012 (예금주: UEDU)</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">입금 금액</span>
+                    <span class="value price"><?= number_format($price) ?>원</span>
+                </div>
+                <div class="info-item">
+                    <span class="label">현재 상태</span>
+                    <span class="value"><span class="badge status-pending">입금대기</span></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="enroll-footer">
+            <a class="btn btn-secondary" href="<?= BASE_URL ?>/myroom.php">나의강의실로</a>
+            <a class="btn btn-primary" href="<?= BASE_URL ?>/courses.php">다른 과정 보기</a>
         </div>
     </div>
 </div>
